@@ -1,0 +1,33 @@
+{
+  "botName": "YASHI HALLS MINI",
+  "botLogoUrl": "https://i.ibb.co/gM1MwL9T/IMG-20261024-WA0008.jpg",
+  "prefix": ".",
+  "mode": "public",
+  "ownerNumber": "94740712934",
+  "autoReadStatus": true,
+  "plan": "mini",
+  "antiLink": true,
+  "antiSpam": false,
+  "welcomeMessage": true,
+  "welcomeTemplate": "Welcome @user to @group! Enjoy your stay.",
+  "callDetectorEnabled": true,
+  "voiceAutoReplyEnabled": true,
+  "channelAutoReact": true,
+  "channelReactEmojis": "❤️,🔥,⚡,👍,🌟,🎉,🚀,😍,👏,💯,🤩",
+  "smartAutoReply": false,
+  "businessBotToken": "",
+  "customGreetingSinhala": "හායි @user! 👋 මම @bot WhatsApp Bot. ඔබට උදව් කිරීමට මම සූදානම්! විධාන බැලීමට @prefixmenu ලෙස එවන්න. 😊",
+  "customGreetingEnglish": "Hello @user! 👋 I am @bot WhatsApp Bot. Type @prefixmenu to view all commands.",
+  "customAutoReplies": [
+    {
+      "id": "rule-price",
+      "keyword": "මිල",
+      "reply": "💰 *YASHI HALLS Bot මිල ගණන්:*\n• MINI Plan: නොමිලේ (FREE / 150 Limit)\n• PRO Plan: 10 Coins\n• BUSINESS Plan: 30 Coins\nDashboard එකෙන් ක්ෂණිකව සක්‍රිය කරගත හැක!"
+    },
+    {
+      "id": "rule-channel",
+      "keyword": "channel",
+      "reply": "🔗 *YASHI HALLS Official Channel:*\nhttps://whatsapp.com/channel/0029Vb927N4GJP8MS1yurM2Z\nනවකම Bot updates සහ features සඳහා අදම එකතු වන්න! 🚀"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "YASHI HALLS - Cloud WhatsApp Bot Platform",
+  "description": "YASHI HALLS - World-class 24/7 WhatsApp Bot Platform. Deploy MINI, PRO, and BUSINESS bots with interactive button menus and AI intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

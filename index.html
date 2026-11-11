@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script>
+      // Runtime constraint: HMR is disabled in AI Studio iframe. Provide a mock WebSocket for Vite HMR to prevent closed connection errors.
+      (function() {
+        if (typeof window !== 'undefined') {
+          if (window.WebSocket) {
+            const RealWebSocket = window.WebSocket;
+            const FakeWebSocket = function(url, protocols) {
+              const urlStr = String(url || '');
+              if (
+                urlStr.includes(window.location.host) ||
+                urlStr.includes('ais-dev-') ||
+                urlStr.includes('ais-pre-') ||
+                urlStr.includes('run.app') ||
+                urlStr.includes('localhost') ||
+                (Array.isArray(protocols) && protocols.includes('vite-hmr')) ||
+                protocols === 'vite-hmr'
+              ) {
+                const listeners = {};
+                const fake = {
+                  url: urlStr,
+                  readyState: 1, // OPEN
+                  protocol: 'vite-hmr',
+                  extensions: '',
+                  bufferedAmount: 0,
+                  binaryType: 'blob',
+                  send: function() {},
+                  close: function() {},
+                  addEventListener: function(type, fn) {
+                    listeners[type] = listeners[type] || [];
+                    listeners[type].push(fn);
+                    if (type === 'open') {
+                      setTimeout(() => {
+                        try { fn({ type: 'open', target: fake }); } catch (e) {}
+                        if (typeof fake.onopen === 'function') {
+                          try { fake.onopen({ type: 'open', target: fake }); } catch (e) {}
+                        }
+                      }, 5);
+                    }
+                  },
+                  removeEventListener: function(type, fn) {
+                    if (listeners[type]) {
+                      listeners[type] = listeners[type].filter(f => f !== fn);
+                    }
+                  },
+                  dispatchEvent: function() { return true; },
+                  onopen: null,
+                  onclose: null,
+                  onerror: null,
+                  onmessage: null,
+                };
+                setTimeout(() => {
+                  if (typeof fake.onopen === 'function') {
+                    try { fake.onopen({ type: 'open', target: fake }); } catch (e) {}
+                  }
+                }, 5);
+                return fake;
+              }
+              return new RealWebSocket(url, protocols);
+            };
+            FakeWebSocket.prototype = RealWebSocket.prototype;
+            FakeWebSocket.CONNECTING = 0;
+            FakeWebSocket.OPEN = 1;
+            FakeWebSocket.CLOSING = 2;
+            FakeWebSocket.CLOSED = 3;
+            window.WebSocket = FakeWebSocket;
+          }
+
+          const origConsoleError = console.error;
+          console.error = function(...args) {
+            const first = String(args[0]?.message || args[0] || '');
+            const second = args[1] ? String(args[1]?.message || args[1]) : '';
+            if (
+              first.includes('WebSocket closed without opened') || 
+              first.includes('@vite/client') || 
+              second.includes('WebSocket closed without opened')
+            ) {
+              return;
+            }
+            origConsoleError.apply(console, args);
+          };
+
+          window.addEventListener('error', function(event) {
+            const msg = String(event?.message || event?.error?.message || '');
+            if (msg.includes('WebSocket closed without opened') || msg.includes('@vite/client')) {
+              event.stopImmediatePropagation();
+              event.preventDefault();
+              return true;
+            }
+          }, true);
+
+          window.addEventListener('unhandledrejection', function(event) {
+            const reason = String(event?.reason?.message || event?.reason || '');
+            if (reason.includes('WebSocket closed without opened') || reason.includes('@vite/client')) {
+              event.stopImmediatePropagation();
+              event.preventDefault();
+              return true;
+            }
+          }, true);
+        }
+      })();
+    </script>
+    <title>YASHI HALLS - Cloud WhatsApp Bot Platform (MINI • PRO • BUSINESS)</title>
+    <meta name="description" content="YASHI HALLS - World-class 24/7 WhatsApp Bot Platform. Deploy MINI, PRO, and BUSINESS bots with interactive button menus and AI intelligence." />
+    <meta property="og:title" content="YASHI HALLS - Cloud WhatsApp Bot Platform" />
+    <meta property="og:description" content="YASHI HALLS - World-class 24/7 WhatsApp Bot Platform. Deploy MINI, PRO, and BUSINESS bots with interactive button menus and AI intelligence." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#070c18" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="YASHI Pay" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="root"></div>
+    <script type="module" crossorigin src="/src/main.tsx"></script>
+  </body>
+</html>
+
